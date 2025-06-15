@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Мои рецензии')"></head>
+<body>
+<div th:replace="layout :: layout(~{::content})">
+    <section th:fragment="content">
+        <h2 class="mb-3">Мои рецензии</h2>
+
+        <h4>Комментарии</h4>
+        <table class="table table-sm">
+            <thead>
+            <tr><th>Достижение</th><th>Комментарий</th><th>Дата</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="c : ${comments}">
+                <td th:text="${c.achievementTitle}">title</td>
+                <td th:text="${c.text}">text</td>
+                <td th:text="${c.createdAt}">date</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h4 class="mt-4">Оценки</h4>
+        <table class="table table-sm">
+            <thead>
+            <tr><th>Достижение</th><th>Оценка</th><th>Дата</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${ratings}">
+                <td th:text="${r.achievementTitle}">title</td>
+                <td th:text="${r.stars}">5</td>
+                <td th:text="${r.createdAt}">date</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+</body>
+</html>

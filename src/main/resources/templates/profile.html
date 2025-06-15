@@ -1,0 +1,14 @@
+<!-- src/main/resources/templates/profile.html -->
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <meta http-equiv="refresh"
+          th:content="'0; URL=' + (${role} == 'ADMIN' ? '/admin/profile' : (${role} == 'TEACHER' ? '/teacher/profile' : '/student/profile'))"/>
+</head>
+<body>
+<p>Перенаправление на ваш личный кабинет...</p>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Студенты')"></head>
+<body>
+<div th:replace="layout :: layout(~{::content})">
+    <section th:fragment="content">
+        <h2 class="mb-3">Студенты</h2>
+        <form class="mb-3" method="get" th:action="@{/students}">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q" placeholder="Поиск" th:value="${query}" />
+                <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+            </div>
+        </form>
+        <div class="table-responsive" th:if="${!#lists.isEmpty(students)}">
+            <table class="table table-striped align-middle">
+                <thead>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Группа</th>
+                    <th>Публичность</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="s : ${students}">
+                    <td>
+                        <a th:href="@{/portfolio/{id}(id=${s.id})}" th:text="${s.fullName}"></a>
+                    </td>
+                    <td th:text="${s.groupName}">Группа</td>
+                    <td th:text="${s.visibility}">PUBLIC</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${#lists.isEmpty(students)}" class="text-muted">Ничего не найдено.</div>
+    </section>
+</div>
+</body>
+</html>

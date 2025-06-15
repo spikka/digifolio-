@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Студенты')"></head>
+<body>
+<div th:replace="layout :: layout(~{::content})">
+    <section th:fragment="content">
+        <h2 class="mb-3">Студенты</h2>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>ФИО</th>
+                <th>Группа</th>
+                <th>Факультет</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${students}">
+                <td th:text="${s.id}">1</td>
+                <td th:text="${s.fullName}">Имя</td>
+                <td th:text="${s.groupName}">Группа</td>
+                <td th:text="${s.faculty}">Факультет</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" th:href="@{/portfolio/{id}(id=${s.id})}">Портфолио</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+</body>
+</html>

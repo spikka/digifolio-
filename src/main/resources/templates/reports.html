@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Отчёты')"></head>
+<body>
+<div class="container py-4">
+    <h2>Отчёты и статистика</h2>
+    <div>
+        <p>Всего пользователей: <span th:text="${stats.userCount}">0</span></p>
+        <p>Студентов: <span th:text="${stats.studentCount}">0</span></p>
+        <p>Учителей: <span th:text="${stats.teacherCount}">0</span></p>
+        <p>Достижений: <span th:text="${stats.achievementsCount}">0</span></p>
+        <p>Средний рейтинг по системе: <span th:text="${stats.avgRating}">0.0</span></p>
+        <p>Активность (новые достижения за 7 дней): <span th:text="${stats.newAchievementsWeek}">0</span></p>
+        <!-- Для графиков: вывести API и сделать fetch/ajax позже -->
+    </div>
+</div>
+</body>
+</html>

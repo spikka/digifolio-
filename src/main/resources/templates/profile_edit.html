@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head('Редактировать профиль')"></head>
+<body>
+<div class="container py-4">
+    <h2>Редактировать профиль</h2>
+    <form th:action="@{/profile/edit}" th:object="${form}" method="post">
+        <div class="mb-3">
+            <label class="form-label">ФИО</label>
+            <input type="text" th:field="*{fullName}" class="form-control" required/>
+            <div class="text-danger" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Группа</label>
+            <input type="text" th:field="*{groupName}" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Факультет</label>
+            <input type="text" th:field="*{faculty}" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Bio</label>
+            <textarea th:field="*{bio}" class="form-control" rows="2"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Телефон</label>
+            <input type="text" th:field="*{phone}" class="form-control"/>
+            <div class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Дата рождения</label>
+            <input type="date" th:field="*{birth}" class="form-control"/>
+            <div class="text-danger" th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Приватность</label>
+            <select th:field="*{visibility}" class="form-select">
+                <option value="PUBLIC">Публичный</option>
+                <option value="PRIVATE">Приватный</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Сохранить</button>
+        <a th:href="@{/profile}" class="btn btn-outline-secondary ms-2">Отмена</a>
+    </form>
+</div>
+</body>
+</html>

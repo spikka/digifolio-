@@ -1,0 +1,36 @@
+<!-- src/main/resources/templates/work_list.html -->
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Трудовой опыт')"></head>
+<body>
+<div th:replace="layout :: layout(~{::content})">
+    <section th:fragment="content">
+        <div class="d-flex justify-content-between mb-3">
+            <h2>Опыт работы</h2>
+            <a class="btn btn-primary" th:href="@{/work/new}">Добавить</a>
+        </div>
+        <table class="table">
+            <thead>
+            <tr><th>Компания</th><th>Должность</th><th>С</th><th>По</th><th></th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="w : ${items}">
+                <td th:text="${w.company}"></td>
+                <td th:text="${w.position}"></td>
+                <td th:text="${w.fromDate}"></td>
+                <td th:text="${w.toDate}"></td>
+                <td>
+                    <a class="btn btn-sm btn-outline-primary"
+                       th:href="@{/work/{id}/edit(id=${w.id})}">Ред.</a>
+                    <form th:action="@{/work/{id}/delete(id=${w.id})}" method="post" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button class="btn btn-sm btn-outline-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+</body>
+</html>

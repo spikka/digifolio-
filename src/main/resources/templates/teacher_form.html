@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Добавить учителя')"></head>
+<body>
+<div class="container py-4">
+    <h2>Добавить учителя</h2>
+    <form th:action="@{/admin/teachers/new}" th:object="${form}" method="post">
+        <div class="mb-2">
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" class="form-control" required/>
+        </div>
+        <div class="mb-2">
+            <label>Имя Фамилия:</label>
+            <input type="text" th:field="*{fullName}" class="form-control"/>
+        </div>
+        <div class="mb-2">
+            <label>Факультет:</label>
+            <input type="text" th:field="*{faculty}" class="form-control"/>
+        </div>
+        <div class="mb-2">
+            <label>Пароль (если пусто — teacher123):</label>
+            <input type="password" th:field="*{password}" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-success">Создать</button>
+        <a class="btn btn-secondary ms-2" th:href="@{/admin/users}">Отмена</a>
+    </form>
+</div>
+</body>
+</html>

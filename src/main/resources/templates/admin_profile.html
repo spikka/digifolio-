@@ -1,0 +1,79 @@
+<!-- src/main/resources/templates/admin_profile.html -->
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head('Кабинет администратора')"></head>
+<body>
+<!-- Кнопка «Выйти» -->
+<div class="d-flex justify-content-end pe-4 py-2">
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-outline-danger btn-sm">Выйти</button>
+    </form>
+</div>
+
+<div th:replace="layout :: layout(~{::content})">
+    <section th:fragment="content">
+
+        <!-- Шапка кабинета -->
+        <div class="d-flex align-items-center mb-4">
+            <img th:if="${user.avatarPath}"
+                 th:src="@{'/uploads/' + ${user.avatarPath}}"
+                 class="rounded-circle me-3" style="width:80px; height:80px;"
+                 alt="Аватар"/>
+            <div>
+                <h3 class="mb-1" th:text="${user.fullName}">Имя Фамилия</h3>
+                <span class="badge bg-danger">Администратор</span>
+            </div>
+        </div>
+
+        <!-- Карточка профиля -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Профиль администратора</h5>
+                <p><strong>Email:</strong> <span th:text="${user.email}">email@domain</span></p>
+            </div>
+        </div>
+
+        <!-- Кнопки действий -->
+        <div class="mb-4">
+            <a class="btn btn-primary me-2" th:href="@{/admin/users}">Пользователи</a>
+            <a class="btn btn-outline-primary me-2" th:href="@{/admin/teachers/new}">Добавить учителя</a>
+            <a class="btn btn-outline-secondary me-2" th:href="@{/admin/achievements}">Достижения</a>
+        </div>
+
+        <!-- Системная статистика -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="p-3 border rounded">
+                    <h6>Пользователей</h6>
+                    <p class="fs-4" th:text="${stats.userCount}">0</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 border rounded">
+                    <h6>Достижений</h6>
+                    <p class="fs-4" th:text="${stats.achievementsCount}">0</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 border rounded">
+                    <h6>Студентов</h6>
+                    <p class="fs-4" th:text="${stats.studentCount}">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Запросы на помощь -->
+        <div th:if="${helpRequests != null and !helpRequests.isEmpty()}">
+            <h6>Запросы на помощь</h6>
+            <ul>
+                <li th:each="r : ${helpRequests}" th:text="${r}"></li>
+            </ul>
+        </div>
+
+    </section>
+</div>
+</body>
+</html>

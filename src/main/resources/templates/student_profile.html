@@ -1,0 +1,120 @@
+<!-- src/main/resources/templates/student_profile.html -->
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout :: head('Кабинет студента')"></head>
+<body>
+<!-- Кнопка «Выйти» -->
+<div class="d-flex justify-content-end pe-4 py-2">
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-outline-danger btn-sm">Выйти</button>
+    </form>
+</div>
+
+<div th:replace="layout :: layout(~{::content})">
+    <section th:fragment="content">
+
+        <!-- Шапка кабинета -->
+        <div class="d-flex align-items-center mb-4">
+            <img th:if="${user.avatarPath}"
+                 th:src="@{'/uploads/' + ${user.avatarPath}}"
+                 class="rounded-circle me-3" style="width:80px; height:80px;"
+                 alt="Аватар"/>
+            <div>
+                <h3 class="mb-1" th:text="${user.fullName}">Имя Фамилия</h3>
+                <div>
+                    <span class="badge bg-primary"
+                          th:text="${#authentication.authorities[0].authority.replace('ROLE_', '')}">
+                        Студент
+                    </span>
+                    <span th:if="${user.groupName}" class="ms-3"
+                          th:text="'Группа: ' + ${user.groupName}">Группа</span>
+                    <span th:if="${user.faculty}" class="ms-3"
+                          th:text="'Факультет: ' + ${user.faculty}">Факультет</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточка профиля -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Мой профиль</h5>
+                <p><strong>Email:</strong> <span th:text="${user.email}">email@domain</span></p>
+                <p><strong>Bio:</strong> <span th:text="${user.bio}">...</span></p>
+                <p>
+                    <strong>Приватность профиля:</strong>
+                    <span th:text="${user.visibility == T(com.spikka.digifolio.model.Visibility).PUBLIC
+                                  ? 'Публичный' : 'Приватный'}">PUBLIC</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Кнопки действий -->
+        <div class="mb-4">
+            <a class="btn btn-primary me-2" th:href="@{/achievements/new}">Добавить достижение</a>
+            <a class="btn btn-outline-primary me-2" th:href="@{/achievements}">Мои достижения</a>
+            <a class="btn btn-outline-secondary me-2" th:href="@{/profile/edit}">Редактировать профиль</a>
+            <a class="btn btn-outline-secondary me-2"
+               th:href="@{/portfolio/{id}(id=${user.id})}">Портфолио</a>
+            <a class="btn btn-outline-secondary" th:href="@{/students}">Список пользователей</a>
+        </div>
+
+        <!-- Быстрая статистика -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="p-3 border rounded">
+                    <h6>Всего достижений</h6>
+                    <p class="fs-4" th:text="${stats.achievementsCount}">0</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 border rounded">
+                    <h6>Новых отзывов</h6>
+                    <p class="fs-4" th:text="${stats.recentFeedbackCount}">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Уведомление о приватности -->
+        <div class="alert alert-warning"
+             th:if="${user.visibility == T(com.spikka.digifolio.model.Visibility).PRIVATE}">
+            Ваше портфолио скрыто от других студентов.
+        </div>
+
+        <!-- Раздел сертификатов -->
+        <div class="mb-4">
+            <h5>Сертификаты</h5>
+            <a class="btn btn-outline-success btn-sm mb-2" th:href="@{/certificates/new}">Добавить сертификат</a>
+            <a class="btn btn-outline-primary btn-sm mb-2" th:href="@{/certificates}">Все сертификаты</a>
+        </div>
+
+        <!-- Раздел проектов -->
+        <div class="mb-4">
+            <h5>Проекты</h5>
+            <a class="btn btn-outline-success btn-sm mb-2" th:href="@{/projects/new}">Добавить проект</a>
+            <a class="btn btn-outline-primary btn-sm mb-2" th:href="@{/projects}">Все проекты</a>
+        </div>
+
+        <!-- Раздел навыков -->
+        <div class="mb-4">
+            <h5>Навыки</h5>
+            <a class="btn btn-outline-success btn-sm mb-2" th:href="@{/skills/new}">Добавить навык</a>
+            <a class="btn btn-outline-primary btn-sm mb-2" th:href="@{/skills}">Все навыки</a>
+        </div>
+
+        <!-- Раздел интересов -->
+        <div class="mb-4">
+            <h5>Интересы</h5>
+            <a class="btn btn-outline-success btn-sm mb-2" th:href="@{/interests/new}">Добавить интерес</a>
+            <a class="btn btn-outline-primary btn-sm mb-2" th:href="@{/interests}">Все интересы</a>
+        </div>
+
+        <!-- Можно добавить и другие блоки (образование, опыт и т.д.) аналогично -->
+
+    </section>
+</div>
+</body>
+</html>
